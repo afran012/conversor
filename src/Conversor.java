@@ -94,7 +94,61 @@ public class Conversor {
 
                 JOptionPane.showMessageDialog(null, "El valor convertido es: " + valorConvertido + " " + seleccionTemperatura.getUnidadTemperatura());
             } else if (seleccion.equals(opciones[2])) {
-                // Aquí va el código para el conversor de velocidad
+                ArrayList<OpcionKilometraje> opcionesKilometraje = new ArrayList<>();
+                opcionesKilometraje.add(new OpcionKilometraje("Convertir de Kilometros a Millas", 0.621371, "Millas"));
+                opcionesKilometraje.add(new OpcionKilometraje("Convertir de Millas a Kilometros", 1.60934, "Kilometros"));
+
+                OpcionKilometraje seleccionKilometraje = (OpcionKilometraje) JOptionPane.showInputDialog(null, "Seleccione una opción", "Conversor de Kilometraje",
+                        JOptionPane.QUESTION_MESSAGE, null, opcionesKilometraje.toArray(), opcionesKilometraje.get(0));
+
+                if (seleccionKilometraje == null) {
+                    System.exit(0);
+                }
+
+                double valor = 0;
+                boolean esNumeroValido = false;
+
+                do {
+                    try {
+                        String valorIngresado = JOptionPane.showInputDialog("Ingrese el valor que desea convertir");
+                        valor = Double.parseDouble(valorIngresado);
+                        esNumeroValido = true;
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } while (!esNumeroValido);
+
+                double valorConvertido = seleccionKilometraje.convertir(valor);
+
+                JOptionPane.showMessageDialog(null, "El valor convertido es: " + valorConvertido + " " + seleccionKilometraje.getUnidadMedida());
+            } else if (seleccion.equals(opciones[3])) {
+                ArrayList<OpcionAnosLuz> opcionesAnosLuz = new ArrayList<>();
+                opcionesAnosLuz.add(new OpcionAnosLuz("Convertir de Años luz a Kilometros", 9.461e+12, "Kilometros"));
+                opcionesAnosLuz.add(new OpcionAnosLuz("Convertir de Kilometros a Años luz", 1.057e-13, "Años luz"));
+
+                OpcionAnosLuz seleccionAnosLuz = (OpcionAnosLuz) JOptionPane.showInputDialog(null, "Seleccione una opción", "Conversor de Años luz",
+                        JOptionPane.QUESTION_MESSAGE, null, opcionesAnosLuz.toArray(), opcionesAnosLuz.get(0));
+
+                if (seleccionAnosLuz == null) {
+                    System.exit(0);
+                }
+
+                double valor = 0;
+                boolean esNumeroValido = false;
+
+                do {
+                    try {
+                        String valorIngresado = JOptionPane.showInputDialog("Ingrese el valor que desea convertir");
+                        valor = Double.parseDouble(valorIngresado);
+                        esNumeroValido = true;
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } while (!esNumeroValido);
+
+                double valorConvertido = seleccionAnosLuz.convertir(valor);
+
+                JOptionPane.showMessageDialog(null, "El valor convertido es: " + valorConvertido + " " + seleccionAnosLuz.getUnidadMedida());
             }
 
             Object[] options = {"Sí", "No", "Cancelar"};
@@ -169,6 +223,72 @@ class OpcionTemperatura {
 
     public String getUnidadTemperatura() {
         return unidadTemperatura;
+    }
+
+    public double convertir(double valor) {
+        return valor * tasaDeCambio;
+    }
+
+    @Override
+    public String toString() {
+        return descripcion;
+    }
+}
+
+class OpcionKilometraje {
+    private String descripcion;
+    private double tasaDeCambio;
+    private String unidadMedida;
+
+    public OpcionKilometraje(String descripcion, double tasaDeCambio, String unidadMedida) {
+        this.descripcion = descripcion;
+        this.tasaDeCambio = tasaDeCambio;
+        this.unidadMedida = unidadMedida;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public double getTasaDeCambio() {
+        return tasaDeCambio;
+    }
+
+    public String getUnidadMedida() {
+        return unidadMedida;
+    }
+
+    public double convertir(double valor) {
+        return valor * tasaDeCambio;
+    }
+
+    @Override
+    public String toString() {
+        return descripcion;
+    }
+}
+
+class OpcionAnosLuz {
+    private String descripcion;
+    private double tasaDeCambio;
+    private String unidadMedida;
+
+    public OpcionAnosLuz(String descripcion, double tasaDeCambio, String unidadMedida) {
+        this.descripcion = descripcion;
+        this.tasaDeCambio = tasaDeCambio;
+        this.unidadMedida = unidadMedida;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public double getTasaDeCambio() {
+        return tasaDeCambio;
+    }
+
+    public String getUnidadMedida() {
+        return unidadMedida;
     }
 
     public double convertir(double valor) {
